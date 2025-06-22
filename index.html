@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор маршрутов</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+<header>
+    <h1>Конструктор маршрутов</h1>
+    <nav>
+        <a href="#">Главная</a>
+        <a href="routes.html">Маршруты</a>
+        <span id="userPanel">
+            <a href="#" id="authLink">Войти</a>
+            <a href="#" id="logoutLink" style="display:none;">Выйти</a>
+        </span>
+    </nav>
+</header>
+
+<div id="authModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <div class="tabs">
+            <button class="tab-button active" id="loginTab">Вход</button>
+            <button class="tab-button" id="registerTab">Регистрация</button>
+        </div>
+
+        <div id="loginForm">
+            <h2>Вход</h2>
+            <form id="loginFormElem">
+                <input type="text" name="username" placeholder="Логин" required><br><br>
+                <input type="password" name="password" placeholder="Пароль" required><br><br>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+
+        <div id="registerForm" style="display:none;">
+            <h2>Регистрация</h2>
+            <form id="registerFormElem">
+                <input type="text" name="username" placeholder="Имя (логин)" required><br><br>
+                <input type="email" name="email" placeholder="Email" required><br><br>
+                <input type="password" name="password" placeholder="Пароль" required><br><br>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="map-container">
+    <div id="map"></div>
+    <div class="controls">
+        <button id="drawRoute"> Нарисовать маршрут</button>
+        <button id="saveRoute"> Сохранить маршрут</button>
+        <button id="clearRoute"> Очистить маршрут</button>
+    </div>
+    <p id="routeDistance">Протяжённость маршрута: 0 км</p>
+    <p id="routeInstructions" class="route-hint">
+    Кликните на карту после активации кнопки "Нарисовать маршрут", чтобы добавить точки. ПКМ по точке — удалить.
+</p>
+
+</div>
+
+<div class="transport-info">
+    <h2>Транспорт</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Тип транспорта</th>
+                <th>Средняя скорость (км/ч)</th>
+                <th>Примерное время (часы)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Автомобиль</td><td>60</td><td id="carTime">-</td></tr>
+            <tr><td>Велосипед</td><td>20</td><td id="bikeTime">-</td></tr>
+            <tr><td>Пешком</td><td>5</td><td id="walkTime">-</td></tr>
+        </tbody>
+    </table>
+    <p id="estimatedTime">Примерное время пути: -</p>
+</div>
+
+<footer>
+    <p>&copy; 2025 Конструктор маршрутов | Все права защищены</p>
+    <p><a href="#">О нас</a> | <a href="#">Контакты</a> | <a href="#">Политика конфиденциальности</a></p>
+</footer>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+<script stc="saveroute.js"></script>
+
+<script>
+const authModal = document.getElementById('authModal');
+const authLink = document.getElementById('authLink');
+const logoutLink = document.getElementById('logoutLink');
+
+authLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    authModal.classList.remove('hidden');
+});
+
+document.querySelector('.close').addEventListener('click', function() {
+    authModal.classList.add('hidden');
+});
+
+document.querySelector('.close').addEventListener('click', function() {
+    authModal.style.display = 'none';
+});
+
+document.getElementById('loginTab').addEventListener('click', function() {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+});
+document.getElementById('registerTab').addEventListener('click', function() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+});
+
+function updateUserInterface() {
+    fetch('check_session.php')
+    .then(res => res.json())
+    .then(data => {
+        if (data.logged_in) {
+            authLink.textContent = data.username;
+            authLink.style.pointerEvents = 'none';
+            logoutLink.style.display = 'inline-block';
+        } else {
+            authLink.textContent = 'Войти';
+            authLink.style.pointerEvents = 'auto';
+            logoutLink.style.display = 'none';
+        }
+    });
+}
+
+logoutLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    fetch('logout.php')
+    .then(() => {
+        alert('Вы вышли');
+        updateUserInterface();
+    });
+});
+
+document.getElementById('loginFormElem').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch('login.php', { method: 'POST', body: formData })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+        authModal.style.display = 'none';
+        updateUserInterface();
+    });
+});
+
+document.getElementById('registerFormElem').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch('register.php', { method: 'POST', body: formData })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+        authModal.style.display = 'none';
+        updateUserInterface();
+    });
+});
+
+document.getElementById('saveRoute').addEventListener('click', () => {
+    if (route.length < 2) {
+        alert('Добавьте хотя бы две точки маршрута перед сохранением.');
+        return;
+    }
+
+    const routeName = prompt('Введите название маршрута:');
+    if (!routeName) return;
+
+    const formData = new FormData();
+    formData.append('name', routeName);
+    formData.append('points', JSON.stringify(route));
+
+    fetch('save_route.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.text())
+    .then(response => {
+        alert(response);
+        drawingEnabled = false;
+    });
+});
+ 
+updateUserInterface();
+</script>
+
+</body>
+</html>

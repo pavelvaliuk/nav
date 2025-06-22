@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои маршруты</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+<header>
+    <h1>Мои маршруты</h1>
+    <nav>
+        <a href="index.html">На главную</a>
+    </nav>
+</header>
+
+
+<section>
+    <h2>Сохранённые маршруты</h2>
+    <div id="routesList">
+        <p>Загрузка маршрутов...</p>
+    </div>
+</section>
+
+<div class="map-container">
+    <div id="map" style="height: 400px;"></div>
+    <p id="routeDistance">Протяжённость маршрута: 0 км</p>
+</div>
+
+<footer>
+    <p>&copy; 2025 Конструктор маршрутов | Все права защищены</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="routes.js"></script>
+
+</body>
+</html>

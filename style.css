@@ -1,0 +1,302 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #acbeab;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #91e879;
+    padding: 15px 20px;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header .logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+#authLink {
+    cursor: pointer;
+}
+
+.map-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#map {
+    width: 100%;
+    height: 500px;
+    border-radius: 8px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#drawRoute {
+    background-color: #2bd452;
+    color: white;
+}
+
+#saveRoute {
+    background-color: #eaba2b;
+    color: white;
+}
+
+#clearRoute {
+    background-color: #bc3643;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+#routeDistance {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.transport-info {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 2px solid #ddd;
+    width: 80%;
+    margin: 20px auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #2e7d32;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    display: block;
+    margin: 0 auto;
+}
+
+button:hover {
+    background-color: #1b5e20;
+}
+
+#estimatedTime {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+footer {
+    background-color: #78b757;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+footer a {
+    color: #164c1e;
+    text-decoration:navajowhite;
+    margin: 0 10px;
+    transition: 0.3s;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+.tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #ddd;
+}
+
+.tab-button.active {
+    background-color: #2e7d32;
+    color: white;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#routesList {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.route-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0f8f3;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #cce4d3;
+    transition: background-color 0.3s;
+}
+
+.route-item:hover {
+    background-color: #d8f1e1;
+}
+
+.route-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #2e7d32;
+    word-break: break-word;
+    max-width: 60%;
+}
+
+.route-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.route-buttons button {
+    padding: 6px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.route-buttons .view-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.route-buttons .delete-btn {
+    background-color: #e64545;
+    color: white;
+}
+
+.route-buttons button:hover {
+    opacity: 0.85;
+}
+
+.route-hint {
+    text-align: center;
+    font-size: 10px;
+    margin-top: 5px;
+    color: #980606;
+}
