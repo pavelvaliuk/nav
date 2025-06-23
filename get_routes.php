@@ -13,7 +13,8 @@ $stmt->execute([$user_id]);
 $routes = $stmt->fetchAll();
 
 foreach ($routes as &$route) {
-    $route['points'] = json_encode(json_decode($route['points'])); // чистый JSON
+    $route['points'] = json_encode(json_decode($route['points'])); 
+    
 }
 
 echo json_encode($routes);
